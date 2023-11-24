@@ -18,4 +18,8 @@ class CourseController(val courseService: CourseService) {
 
     @PutMapping("/{id}")
     fun updateCourse(@RequestBody courseDTO: CourseDTO, @PathVariable id: Int) = courseService.updateCourse(id,courseDTO)
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun deleteCourse(@PathVariable id: Int) = courseService.deleteCourse(id)
 }

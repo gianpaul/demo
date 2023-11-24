@@ -9,9 +9,7 @@ import pe.exirium.demo.repository.CourseRepository
 class CourseService(val courseRepository: CourseRepository) {
 
     fun addCourse(courseDTO: CourseDTO): CourseDTO {
-        val course = courseDTO.toEntity()
-        courseRepository.save(course)
-        return course.toDTO()
+        return courseRepository.save(courseDTO.toEntity()).toDTO()
     }
 
     fun retrieveCourses(): List<CourseDTO> {
@@ -19,8 +17,12 @@ class CourseService(val courseRepository: CourseRepository) {
     }
 
     fun updateCourse(id: Int, courseDTO: CourseDTO): CourseDTO {
-        val course = courseRepository.findById(id).orElseThrow { CourseNotFoundException("Course not found") }
-        courseRepository.save(course.copy(name = courseDTO.name, category = courseDTO.category))
-        return course.toDTO()
+        val course = courseRepository.findById(id).orElseThrow { CourseNotFoundException("Course $id not found") }
+        return courseRepository.save(course.copy(name = courseDTO.name, category = courseDTO.category)).toDTO()
+    }
+
+    fun deleteCourse(id: Int) {
+        val course = courseRepository.findById(id).orElseThrow { CourseNotFoundException("Course $id not found") }
+        courseRepository.delete(course)
     }
 }

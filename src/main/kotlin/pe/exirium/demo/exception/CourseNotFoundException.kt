@@ -1,3 +1,3 @@
 package pe.exirium.demo.exception
 
-class CourseNotFoundException(s: String) : RuntimeException(s)
+class CourseNotFoundException(message: String) : RuntimeException(message)
